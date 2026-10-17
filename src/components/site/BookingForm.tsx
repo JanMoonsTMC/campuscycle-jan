@@ -27,6 +27,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { MADE_UP_DATA_NOTICE } from '@/content/campus-cycle'
+import { formatPrice } from '@/lib/format'
 import type { Repair } from '@/payload-types'
 import type { BookingField, BookingResult, BookingValues } from '@/tasks/book-slot/createBooking'
 import { saveBooking } from '@/tasks/book-slot/saveBooking'
@@ -88,7 +89,7 @@ function RepairChoice({ repairs }: { repairs: BookingFormProps['repairs'] }) {
         Repairs <span className="font-normal text-ink-soft">(optional)</span>
       </legend>
       {repairs.map((repair) => {
-        const label = repair.name // To show the price in the choice too, add the record's price here (formatPrice(repair.price)): it reads the stored price, nothing is copied. Also import formatPrice from '@/lib/format', as the clinic page does.
+        const label = `${repair.name}, ${formatPrice(repair.price)}` // The price its record holds, read where it is stored: nothing is copied.
         return (
           <label key={repair.id} className="flex min-h-11 items-center gap-3">
             <input type="checkbox" name="repairs" value={repair.id} defaultChecked={sent.repairs?.includes(String(repair.id))} className="size-5 accent-ink" />
